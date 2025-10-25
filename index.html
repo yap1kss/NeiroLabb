@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroLab - Создание контента с помощью нейросетей</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* --- Базовые стили --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 3.5rem; }
+        h2 { 
+            font-size: 2.5rem; 
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        h3 { 
+            font-size: 1.5rem; 
+            margin-bottom: 15px;
+        }
+        h4 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* Чередование фона секций для лучшего восприятия */
+        section:nth-of-type(odd) {
+            background: #f9f7ff;
+        }
+        section:nth-of-type(even) {
+            background: #fff;
+        }
+        #hero { /* Герой всегда светлый */
+            background: #f9f7ff;
+        }
+        
+        .primary-color {
+            color: #6D28D9;
+        }
+
+        /* --- Кнопка (Call to Action) --- */
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(90deg, #8B5CF6, #6D28D9);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(109, 40, 217, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(109, 40, 217, 0.5);
+        }
+
+        /* --- Хедер (Шапка сайта) --- */
+        header {
+            background: #fff;
+            padding: 0; 
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px; 
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #6D28D9;
+        }
+
+        /* --- Секция Hero (Главный экран) --- */
+        #hero {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        #hero h1 {
+            margin-bottom: 20px;
+        }
+
+        #hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            color: #444;
+        }
+
+        /* --- Секция Услуги --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+
+        .service-card .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #6D28D9;
+        }
+        
+        /* --- НОВЫЙ БЛОК: Преимущества работы с AI --- */
+        #ai-benefits .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        #ai-benefits .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        #ai-benefits .benefit-item:hover {
+            transform: translateY(-5px);
+        }
+        #ai-benefits .benefit-item .icon {
+            font-size: 2.5rem;
+            color: #6D28D9;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        #ai-benefits .benefit-item h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        #ai-benefits .benefit-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* --- НОВЫЙ БЛОК: Как мы работаем --- */
+        .how-it-works-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .step-card {
+            padding: 20px;
+        }
+        
+        .step-number {
+            font-size: 3.5rem; 
+            font-weight: 700;
+            color: #D4C1F0;
+            line-height: 1;
+            /* Добавим небольшой отступ снизу для воздуха */
+            margin-bottom: 10px; 
+        }
+        
+        .step-card h3 {
+            /* ИЗМЕНЕНО: Убрали отрицательный отступ */
+            margin-top: 0; 
+            font-size: 1.25rem;
+        }
+        
+        .step-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* --- НОВЫЙ БЛОК: Преимущества (Почему мы) --- */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .benefits-list {
+            list-style: none;
+        }
+        
+        .benefits-list li {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .benefits-list .icon {
+            font-size: 1.5rem;
+            color: #6D28D9;
+            margin-right: 15px;
+            margin-top: 2px;
+        }
+        
+        .benefits-list h4 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .benefits-list p {
+            margin-bottom: 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .benefits-image {
+            height: 400px;
+            background-color: #e0e0e0;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .benefits-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- Секция "Для кого" --- */
+        .target-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            list-style: none;
+        }
+
+        .target-list li {
+            background: #fff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+        }
+
+        /* --- НОВЫЙ БЛОК: Отзывы --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+        
+        .testimonial-card p.quote {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .testimonial-card p.author {
+            font-weight: 700;
+            color: #6D28D9;
+            margin-bottom: 0;
+        }
+
+        .testimonial-card .quote-icon {
+            font-size: 3rem;
+            color: #f0eaff;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            z-index: -1;
+        }
+        
+        /* --- НОВЫЙ БЛОК: FAQ --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: 0;
+        }
+        
+        .faq-item h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        /* --- Секция Контакты --- */
+        #contact {
+            text-align: center;
+        }
+
+        #contact p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .contact-details {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .contact-item a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: #6D28D9;
+        }
+
+        /* --- Футер (Подвал) --- */
+        footer {
+            background: #222;
+            color: #aaa;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* --- Адаптивность (для мобильных) --- */
+        @media (max-width: 992px) {
+            .services-grid,
+            #ai-benefits .benefits-grid,
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            .how-it-works-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+
+            nav {
+                display: none;
+            }
+
+            header .container {
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .services-grid,
+            #ai-benefits .benefits-grid,
+            .how-it-works-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section { padding: 60px 0; }
+            #hero { padding: 80px 0; }
+
+            .contact-details {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="#"><img src="logo.png" alt="NeuroLab Логотип"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#ai-benefits">Выгоды AI</a></li>
+                    <li><a href="#how-it-works">Процесс</a></li>
+                    <li><a href="#benefits">Преимущества</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+            <a href="https://t.me/kriskuznezova" target="_blank" class="btn">Связаться</a>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h1>Создаем <span class="primary-color">контент</span>, который продает. <br>Силами нейросетей.</h1>
+            <p>
+                NeuroLab — ваша команда для производства уникальных фото, видео и текстов.
+                Доверьте рутину AI, а себе оставьте стратегию и рост.
+            </p>
+            <a href="#contact" class="btn">Обсудить мой проект</a>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>Что мы делаем?</h2>
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-camera"></i></div>
+                    <h3>AI-Фото и Изображения</h3>
+                    <p>
+                        Создаем реалистичные фотографии, креативы для рекламы, обложки и инфографику. Идеально для маркетплейсов, соцсетей и бизнеса, когда нет бюджета на фотосессию.
+                    </p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-video"></i></div>
+                    <h3>AI-Видео и Анимация</h3>
+                    <p>
+                        Генерируем рекламные ролики, анимацию, говорящих аватаров и Reels/Shorts. Привлекайте внимание аудитории динамичным контентом без сложных съемок.
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-pen-nib"></i></div>
+                    <h3>AI-Тексты и Копирайтинг</h3>
+                    <p>
+                        Пишем продающие посты для Telegram и Instagram, SEO-статьи для сайтов и описания для карточек товаров. Быстро, грамотно и с учетом ваших целей.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-benefits">
+        <div class="container">
+            <h2>Почему работать с AI выгодно?</h2>
+            <div class="benefits-grid">
+                
+                <div class="benefit-item">
+                    <div class="icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <h3>Экономия времени</h3>
+                        <p>Искусственный интеллект создает контент в разы быстрее человека. От идеи до готового материала — считанные часы, а не дни или недели.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="icon"><i class="fas fa-wallet"></i></div>
+                    <div>
+                        <h3>Сокращение затрат</h3>
+                        <p>Вам не нужно нанимать дорогих фотографов, видеографов или копирайтеров. AI-контент значительно дешевле, сохраняя при этом высокое качество.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="icon"><i class="fas fa-palette"></i></div>
+                    <div>
+                        <h3>Безграничный креатив</h3>
+                        <p>ИИ способен генерировать уникальные изображения и тексты, выходящие за рамки обыденности. Создайте контент, который удивит вашу аудиторию.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <div>
+                        <h3>Повышение эффективности</h3>
+                        <p>Благодаря скорости и доступности, вы можете тестировать больше гипотез, чаще обновлять контент и быстрее реагировать на тренды, увеличивая вовлеченность.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <div class="container">
+            <h2>Всего 4 шага к готовому контенту</h2>
+            <div class="how-it-works-grid">
+                
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>Бриф и Задача</h3>
+                    <p>Вы описываете задачу, присылаете референсы и рассказываете о своей аудитории.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>Магия AI</h3>
+                    <p>Мы подбираем нейросети, пишем промты и генерируем первые варианты контента.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>Правки</h3>
+                    <p>Вы смотрите результат. Если нужно, мы вносим корректировки, пока не получим "Вау!"-эффект.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <h3>Результат</h3>
+                    <p>Передаем вам готовые материалы в нужном формате. Вы получаете лайки и продажи!</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <section id="benefits">
+        <div class="container">
+            <h2>Почему <span class="primary-color">NeuroLab</span>, а не фрилансер?</h2>
+            <div class="benefits-grid">
+                <div class="benefits-list">
+                    <ul>
+                        <li>
+                            <div class="icon"><i class="fas fa-rocket"></i></div>
+                            <div>
+                                <h4>Скорость х10</h4>
+                                <p>То, на что у команды уходит неделя, мы делаем за 24 часа. Дедлайны больше не горят.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon"><i class="fas fa-coins"></i></div>
+                            <div>
+                                <h4>Экономия бюджета</h4>
+                                <p>Наш сервис заменяет фотографа, копирайтера и видеографа. Вы платите в 3-5 раз меньше.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon"><i class="fas fa-lightbulb"></i></div>
+                            <div>
+                                <h4>Безграничный креатив</h4>
+                                <p>Никаких стоковых фото. Создадим любой, даже самый фантастический визуал для вашего бренда.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon"><i class="fas fa-layer-group"></i></div>
+                            <div>
+                                <h4>Масштабирование</h4>
+                                <p>Нужно 1000 уникальных картинок для маркетплейса? Или 100 постов? Для нас это не проблема.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="benefits-image">
+                    <img src="neirolab.jpg" alt="Нейросеть NeuroLab">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="target">
+        <div class="container">
+            <h2>Кому это выгодно?</h2>
+            <ul class="target-list">
+                <li>Блоггерам</li>
+                <li>Бизнесу и стартапам</li>
+                <li>Продавцам на маркетплейсах</li>
+                <li>Telegram-каналам</li>
+                <li>Instagram-каналам</li>
+                <li>SMM-специалистам</li>
+                <li>Маркетологам</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="testimonials">
+        <div class="container">
+            <h2>Что о нас говорят клиенты</h2>
+            <div class="testimonials-grid">
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote">"Ребята из NeuroLab буквально спасли мой дедлайн. Нужно было 15 креативов для таргета за ночь. Сделали за 3 часа, и 3 из них дали лучший CTR за весь месяц. Огонь!"</p>
+                    <p class="author">Анна, SMM-менеджер</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote">"Заказывал инфографику для Wildberries. Раньше платил дизайнеру по 1000р за карточку. Тут получил 10 вариантов за 3000. Качество не отличить. Полностью перешел на AI."</p>
+                    <p class="author">Иван, Продавец на WB</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote">"Веду свой ТГ-канал. Вечная проблема - о чем писать. NeuroLab не только написали 30 постов, но и сгенерили к ним уникальные обложки. Подписчики в восторге!"</p>
+                    <p class="author">Ольга, "Finance & Life"</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+    <section id="faq">
+        <div class="container">
+            <h2>Отвечаем на вопросы</h2>
+            <div class="faq-container">
+                
+                <div class="faq-item">
+                    <h3>Насколько уникален контент? Его не забанят?</h3>
+                    <p>Контент на 100% уникален. Нейросеть генерирует каждое изображение и текст с нуля. Это не стоковые картинки, поэтому проблем с авторским правом или банами не будет.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>А что, если мне не понравится результат?</h3>
+                    <p>В этом и прелесть AI. Мы можем сгенерировать 10, 20 или 50 вариантов, пока не найдем тот, что вам идеально подходит. Мы всегда работаем до финального утверждения.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Как быстро я получу заказ?</h3>
+                    <p>Текстовый контент (посты, статьи) — обычно в течение 24 часов. Фото и визуал — 1-2 дня, в зависимости от сложности. Видео — 2-3 дня. Это в разы быстрее любой студии.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Вы пишете промты или делаете все "под ключ"?</h3>
+                    <p>Мы делаем все "под ключ". Вам не нужно разбираться в Midjourney, ChatGPT или Stable Diffusion. Вы даете нам задачу — мы приносим готовый результат.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Готовы делегировать контент нейросетям?</h2>
+            <p>
+                Напишите нам, чтобы получить бесплатную консультацию. Мы проанализируем вашу задачу
+                и предложим лучшее решение с помощью AI.
+            </p>
+            <a href="https://t.me/kriskuznezova" target="_blank" class="btn">Написать в Telegram (@kriskuznezova)</a>
+
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i> <strong>WhatsApp:</strong> 
+                    <a href="https://wa.me/79931355471" target="_blank">+7 (993) 135-54-71</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-telegram-plane"></i> <strong>Telegram-канал:</strong> 
+                    <a href="https://t.me/NeuroLabT" target="_blank">t.me/NeuroLabT</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NeuroLab. Все права защищены.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
